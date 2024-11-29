@@ -46,7 +46,7 @@ void	external_exit(char **args, t_env *minienv, int exit_status)
 	// rl_clear_history();
 	// free_minienv(&minienv);
 	// free_array(args);
-	// close_all_fds();
+	close_all_fds();
 	exit(exit_status);
 }
 
@@ -70,17 +70,24 @@ int	execute_external(char **args, t_env *minienv)
 	if (is_folder(command))
 		external_exit(args, minienv, NOT_EXECUTABLE);
 	path = get_path(command, minienv);
-	printf("%s\n",path);
+	
 	if (path == NULL && minienv_has_path(minienv))
+	{
 		external_exit(args, minienv, CMD_NOT_FOUND);
+	}
+	
 	else if (path == NULL)
 		path = ft_strdup(command);
 	// rl_clear_history();
-	// close_extra_fds();
+	close_extra_fds();
 	envp = minienv_to_envp(minienv);
 	free_minienv(&minienv);
 	if (execve(path, args, envp) == -1)
+	{
 		handle_execve_errors(args, path, envp);
+
+	}
+		
 	exit(EXIT_SUCCESS);
 }
 

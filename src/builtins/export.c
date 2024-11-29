@@ -11,7 +11,7 @@ int builtin_export(char **args)
     char *name;
     char *value;
     char *equal;
-    int status = SUCCESS;
+    int status = SUCCESS1;
 
     if (!args[1])
         return (builtin_env(args)); // Если нет аргументов, вывести окружение

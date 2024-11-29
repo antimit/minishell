@@ -8,8 +8,7 @@
 #include <stdio.h>
 
 
-t_token *tokenize_input(const char *input)
-{
+t_token *tokenize_input(const char *input) {
     t_token *head = NULL;
     t_token *current = NULL;
     size_t i = 0;
@@ -18,9 +17,8 @@ t_token *tokenize_input(const char *input)
     size_t buf_index = 0;
     token_quote current_quote = TOKEN_NONE;
 
-    while (i < len)
-    {
-        
+    while (i < len) {
+        // Skip leading whitespace
         while (i < len && isspace(input[i]))
             i++;
         if (i >= len)
@@ -28,73 +26,58 @@ t_token *tokenize_input(const char *input)
 
         buf_index = 0;
 
-        
-        while (i < len && !isspace(input[i]))
-        {
-            if (input[i] == '\'')
-            {
+        // Process non-whitespace segments
+        while (i < len && !isspace(input[i])) {
+            if (input[i] == '\'') {
                 current_quote = TOKEN_SINGLE_QUOTE;
-                i++; 
-                while (i < len && input[i] != '\'')
-                {
+                buffer[buf_index++] = input[i++]; // Add opening quote to buffer
+                while (i < len && input[i] != '\'') {
                     buffer[buf_index++] = input[i++];
                 }
-                if (i < len && input[i] == '\'')
-                    i++; 
-            }
-            else if (input[i] == '\"')
-            {
+                if (i < len && input[i] == '\'') {
+                    buffer[buf_index++] = input[i++]; // Add closing quote to buffer
+                }
+            } else if (input[i] == '\"') {
                 current_quote = TOKEN_DOUBLE_QUOTE;
-                i++; 
-                while (i < len && input[i] != '\"')
-                {
-                    if (input[i] == '\\' && (i + 1) < len && 
-                        (input[i+1] == '\"' || input[i+1] == '\\' || input[i+1] == '$' || input[i+1] == '`'))
-                    {
-                        buffer[buf_index++] = input[i+1];
-                        i += 2;
-                    }
-                    else
-                    {
+                buffer[buf_index++] = input[i++]; // Add opening quote to buffer
+                while (i < len && input[i] != '\"') {
+                    if (input[i] == '\\' && (i + 1) < len &&
+                        (input[i+1] == '\"' || input[i+1] == '\\' || input[i+1] == '$' || input[i+1] == '`')) {
+                        buffer[buf_index++] = input[i++]; // Add backslash to buffer
+                        buffer[buf_index++] = input[i++]; // Add escaped character to buffer
+                    } else {
                         buffer[buf_index++] = input[i++];
                     }
                 }
-                if (i < len && input[i] == '\"')
-                    i++; 
-            }
-            else
-            {
+                if (i < len && input[i] == '\"') {
+                    buffer[buf_index++] = input[i++]; // Add closing quote to buffer
+                }
+            } else {
                 buffer[buf_index++] = input[i++];
             }
         }
 
         buffer[buf_index] = '\0';
 
-        
+        // Environment variable expansion only if not in single quotes
         char *processed_value = NULL;
-        if (current_quote != TOKEN_SINGLE_QUOTE)
-        {
+        if (current_quote != TOKEN_SINGLE_QUOTE) {
             processed_value = expand_env_vars(buffer);
-            if (!processed_value)
-            {
+            if (!processed_value) {
                 free_tokens(head);
                 return NULL;
             }
-        }
-        else
-        {
+        } else {
             processed_value = strdup(buffer);
-            if (!processed_value)
-            {
+            if (!processed_value) {
                 free_tokens(head);
                 return NULL;
             }
         }
 
-        
+        // Create a new token
         t_token *new_token = malloc(sizeof(t_token));
-        if (!new_token)
-        {
+        if (!new_token) {
             free(processed_value);
             free_tokens(head);
             return NULL;
@@ -103,24 +86,21 @@ t_token *tokenize_input(const char *input)
         new_token->quote = current_quote;
         new_token->next = NULL;
 
-        
-        if (!head)
-        {
+        // Add token to the linked list
+        if (!head) {
             head = new_token;
             current = new_token;
-        }
-        else
-        {
+        } else {
             current->next = new_token;
             current = new_token;
         }
 
-        
-        current_quote = TOKEN_NONE;
+        current_quote = TOKEN_NONE; // Reset quote state
     }
 
     return head;
 }
+
 
 
 void free_tokens(t_token *tokens)
@@ -166,7 +146,7 @@ t_command *create_command(char **args)
     cmd->next = NULL;
 
     
-    find_redirections(cmd);
+    // find_redirections(cmd);
     return cmd;
 }
 

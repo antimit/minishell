@@ -17,3 +17,17 @@ void	move_one_forward(char *str)
 {
 	ft_memmove(str, str + 1, ft_strlen(str + 1) + 1);
 }
+
+
+int	arr_len(char **arr)
+{
+	int	len;
+
+	len = 0;
+	while (*arr)
+	{
+		len++;
+		arr++;
+	}
+	return (len);
+}

@@ -16,5 +16,5 @@ int builtin_env(char **args)
     }
 
     g_exit_status = 0; // Устанавливаем статус выполнения
-    return (SUCCESS);
+    return (SUCCESS1);
 }

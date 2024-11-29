@@ -14,21 +14,26 @@
 # include <ctype.h>
 # include <limits.h>
 
+
+
+
 # include "builtins.h"
 # include "executor.h"
 # include "parser.h"
 # include "signals.h"
 # include "utils.h"
 # include "error.h"
+# include "pipes.h"
 # include "libft.h"
 # define EXIT_SHELL 100
-# define SUCCESS 0
+# define SUCCESS 1
+# define SUCCESS1 0
 # define IN 0
 # define OUT 1
 
 # define TRUE 1
 # define FALSE 0
-// # define SUCCESS 1
+
 # define FAILED 0
 
 

@@ -19,7 +19,7 @@ int main(int argc, char * argv[], char ** envp)
     int         status;
 
     init_signals();
-    status = SUCCESS;
+    status = SUCCESS1;
     while (1)
     {
         input = read_input();
@@ -31,14 +31,16 @@ int main(int argc, char * argv[], char ** envp)
         if (strlen(input) > 0)
             add_history(input);
         cmd = parse_input(input);
-        int i;
-        i = 0;
+        
+        
         free(input);
         if (!cmd)
+        {
             continue;
-        status = execute_commands(cmd,init_minienv(envp));
+        }
+        g_exit_status = execute_commands(cmd,init_minienv(envp));
         free_commands(cmd);
-        if (status == EXIT_SHELL)
+        if (g_exit_status == EXIT_SHELL)
             return(g_exit_status);
         // Reset signal flags
         if (g_signal)

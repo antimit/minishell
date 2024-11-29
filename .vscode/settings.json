@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "builtins.h": "c",
-        "minishell.h": "c"
+        "minishell.h": "c",
+        "chrono": "c",
+        "functional": "c"
     }
 }

@@ -4,7 +4,7 @@
 # include "minishell.h"
 typedef struct s_command	t_command;
 
-int							execute_builtin(t_command *cmd);
+int							execute_builtin(char ** cmd);
 int	                        is_builtin(char *command);
 int							builtin_cd(char **args);
 int							builtin_echo(char **args);

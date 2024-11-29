@@ -3,12 +3,12 @@
 int builtin_unset(char **args)
 {
 	int		i;
-	int		status = SUCCESS;
+	int		status = SUCCESS1;
 
 	if (!args[1])
 	{
 		
-		return (SUCCESS);
+		return (SUCCESS1);
 	}
 	i = 1;
 	while (args[i])

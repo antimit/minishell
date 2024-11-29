@@ -9,5 +9,5 @@ int	builtin_pwd(char **args)
 		printf("%s\n", cwd);
 	else
 		perror("minishell");
-	return (SUCCESS);
+	return (SUCCESS1);
 }

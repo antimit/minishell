@@ -36,9 +36,14 @@ char	*get_label_name(char *redirect_str)
 	char	*remaining_cmd;
 
 	name_start = 0;
+	printf("START\n");
+	printf("%s\n",redirect_str);
 	move_one_forward(redirect_str);
+	printf("%s\n",redirect_str);
+	printf("END\n");
 	if (redirect_str[name_start] == '>')
 		move_one_forward(&redirect_str[name_start]);
+		
 	while (redirect_str[name_start] == ' ' || redirect_str[name_start] == '\t')
 		name_start++;
 	name_end = get_name_end(&redirect_str[name_start]);

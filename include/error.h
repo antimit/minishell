@@ -17,5 +17,8 @@
 
 void	print_error_msg(char *command, char *msg);
 void	print_perror_msg(char *command, char *perror_msg);
+void	exit_with_error(char *command, char *msg, int error);
+void	exit_with_perror(char *command, char *perror_msg, int error);
+void	print_varname_error_msg(char *command, char *varname);
 
 #endif

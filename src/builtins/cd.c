@@ -29,5 +29,5 @@ int builtin_cd(char **args)
         return (1);
     }
 
-    return (SUCCESS);
+    return (SUCCESS1);
 }
